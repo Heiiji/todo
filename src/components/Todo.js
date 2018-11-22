@@ -8,15 +8,17 @@ function urlify(text) {
     })
 }
 
-const Todo = ({ onClick, completed, text, remove }) => (
+const Todo = ({ onClick, completed, text, remove, check }) => (
   <li
     className="todo"
     style={{
-      textDecoration: completed ? 'line-through' : 'none'
+      textDecoration: completed ? 'line-through !important' : 'none',
+        opacity: completed ? '0.3' : '1',
     }}
   >
-    <span onClick={onClick} dangerouslySetInnerHTML={{__html: urlify(text)}} ></span>
+    <span onClick={onClick} dangerouslySetInnerHTML={{__html: urlify(text)}} style={{display: 'inline-block', width: '80%'}} ></span>
       <span onClick={remove} className="delete">X</span>
+      <span onClick={check} className="check">√</span>
   </li>
 )
 

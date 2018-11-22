@@ -59,11 +59,22 @@
 .todo:hover .delete {
   display: inline-block;
 }
+.todo:hover .check {
+  display: inline-block;
+}
+
 .delete {
   color: red;
   display: none;
   position: absolute;
   right: 20px;
+  z-index: 6;
+}
+.check {
+  color: darkblue;
+  display: none;
+  position: absolute;
+  left: 20px;
   z-index: 6;
 }
 .todoEnd {
@@ -91,4 +102,42 @@
 }
 .chance:hover {
   opacity: 0.8;
+}
+.popup {
+  position: fixed;
+  top: 5%;
+  left: 5%;
+  width: calc(90% - 50px);
+  height: calc(90% - 50px);
+  background-color: rgba(240, 240, 240, 0.95);
+  z-index: 7;
+  border-radius: 10px;
+  padding: 50px;
+  text-align: center;
+}
+.popup .erase {
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  padding: 10px;
+  width: 100px;
+  border: solid 1px red;
+  border-radius: 10px;
+}
+.popup .erase:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+.popup .close {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  padding: 10px;
+  width: 100px;
+  border: solid 1px black;
+  border-radius: 10px;
+}
+.popup .close:hover {
+  background-color: gray;
+  cursor: pointer;
 }
