@@ -8,15 +8,15 @@ function urlify(text) {
     })
 }
 
-const Todo = ({ onClick, completed, text }) => (
+const Todo = ({ onClick, completed, text, remove }) => (
   <li
-    onClick={onClick}
     className="todo"
     style={{
       textDecoration: completed ? 'line-through' : 'none'
     }}
-    dangerouslySetInnerHTML={{__html: urlify(text)}}
   >
+    <span onClick={onClick} dangerouslySetInnerHTML={{__html: urlify(text)}} ></span>
+      <span onClick={remove} className="delete">X</span>
   </li>
 )
 

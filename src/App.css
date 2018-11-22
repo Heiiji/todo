@@ -56,6 +56,16 @@
 .todo:hover {
   box-shadow: 0px 2px 3px rgba(0, 0, 0, 0.6);
 }
+.todo:hover .delete {
+  display: inline-block;
+}
+.delete {
+  color: red;
+  display: none;
+  position: absolute;
+  right: 20px;
+  z-index: 6;
+}
 .todoEnd {
   display: block;
   text-align: center;
