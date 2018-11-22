@@ -69,3 +69,16 @@
 .todoEnd:hover {
   opacity: 0.6;
 }
+.chance {
+  background-color: darkblue;
+  color: white;
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.chance:hover {
+  opacity: 0.8;
+}
