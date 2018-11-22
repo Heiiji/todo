@@ -6,8 +6,23 @@ import { createStore } from 'redux'
 import todoApp from './reducers'
 import App from './components/App'
 import * as serviceWorker from './serviceWorker';
+import {loadState, saveState} from "./localStorage";
 
-const store = createStore(todoApp);
+const persistedState = loadState();
+console.log('tah')
+console.log(persistedState)
+const store = createStore(
+    todoApp,
+    persistedState
+);
+
+let interval = setInterval(() => {
+    store.subscribe(() => {
+        saveState({
+            todos: store.getState().todos
+        });
+    });
+}, 1000);
 
 ReactDOM.render(<Provider store={store}><App /></Provider>, document.getElementById('root'));
 
