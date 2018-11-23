@@ -1,4 +1,4 @@
-const todos = (state = [], action) => {
+const todos = (state = [], action, text) => {
   switch (action.type) {
       case 'ADD_TODO':
           return [
@@ -10,7 +10,13 @@ const todos = (state = [], action) => {
               }
           ]
       case 'DELETE_TODO':
-          return state.filter((data, i) => i !== action.id)
+          return state.filter((data) => data.id !== action.id)
+      case 'EDIT_TODO':
+          return state.map(todo =>
+              (todo.id === action.id)
+                  ? {...todo, text: action.text}
+                  : todo
+          )
     case 'TOGGLE_TODO':
       return state.map(todo =>
         (todo.id === action.id)

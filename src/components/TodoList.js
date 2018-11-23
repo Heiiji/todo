@@ -11,25 +11,23 @@ class TodoList extends React.Component {
 
         this.state = {
             popup: null,
-            chat: 'https://purr.objects-us-west-1.dream.io/i/NlaPbCh.jpg'
+            chat: 'https://purr.objects-us-west-1.dream.io/i/NlaPbCh.jpg',
+            edit: ''
         }
+
+        this.handleChange = this.handleChange.bind(this);
     }
 
     TogPopup(todo) {
+        var text = todo.text;
         if (this.state.popup) {
             this.setState({
                 popup: null
             });
         } else {
-            let popup = <div className="popup">
-                { todo.completed ? <span style={{color: 'green'}}>DONE</span> : <span style={{color: 'black'}}>WIP</span> }
-                <p>{todo.text}</p>
-                <img src={this.state.chat} alt="cat" width="250" />
-                <div className="erase" onClick={() => {this.props.deleteTodo(todo.id); this.setState({popup: null})}}>Effacer</div>
-                <div className="close" onClick={() => {this.setState({popup: null})}}>close</div>
-            </div>;
             this.setState({
-                popup: popup
+                popup: todo,
+                edit: todo.text
             });
             axios.get('http://aws.random.cat/meow').then((res) => {
                 let cat = res.data.file;
@@ -38,9 +36,27 @@ class TodoList extends React.Component {
         }
     }
 
+    handleChange(event) {
+        this.props.editTodo(event.target.value, this.state.popup.id);
+        this.setState({edit: event.target.value});
+    }
+
     render() {
+        let popup = null;
+
+        if (this.state.popup) {
+            popup = <div className="popup">
+                { this.state.popup.completed ? <span style={{color: 'green'}}>DONE</span> : <span style={{color: 'black'}}>WIP</span> }<br/>
+                <textarea  style={{ width: '60%', margin: 10 }} value={this.state.edit} onChange={(e) => this.handleChange(e)} /><br/>
+                <img src={this.state.chat} alt="cat" width="250" />
+                <div className="erase" onClick={() => {this.props.deleteTodo(this.state.popup.id); this.setState({popup: null})}}>Effacer</div>
+                <div className="close" onClick={() => {this.setState({popup: null})}}>Save and close</div>
+            </div>;
+        }
+
+
         return <div>
-            {this.state.popup}
+            {popup}
             <ul className="todoContain">
                 {this.props.todos.map(todo =>
                     <Todo
