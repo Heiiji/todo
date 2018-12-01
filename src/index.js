@@ -16,7 +16,7 @@ const store = createStore(
     persistedState
 );
 
-let interval = setInterval(() => {
+setInterval(() => {
     store.subscribe(() => {
         saveState({
             todos: store.getState().todos

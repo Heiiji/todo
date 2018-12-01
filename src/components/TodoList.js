@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Todo from './Todo'
+import Popup from './popup'
 import FilterLink from '../containers/FilterLink'
 import { VisibilityFilters } from '../actions'
 import axios from 'axios'
@@ -13,13 +14,10 @@ class TodoList extends React.Component {
             popup: null,
             chat: 'https://purr.objects-us-west-1.dream.io/i/NlaPbCh.jpg',
             edit: ''
-        }
-
-        this.handleChange = this.handleChange.bind(this);
+        };
     }
 
     TogPopup(todo) {
-        var text = todo.text;
         if (this.state.popup) {
             this.setState({
                 popup: null
@@ -36,27 +34,9 @@ class TodoList extends React.Component {
         }
     }
 
-    handleChange(event) {
-        this.props.editTodo(event.target.value, this.state.popup.id);
-        this.setState({edit: event.target.value});
-    }
-
     render() {
-        let popup = null;
-
-        if (this.state.popup) {
-            popup = <div className="popup">
-                { this.state.popup.completed ? <span style={{color: 'green'}}>DONE</span> : <span style={{color: 'black'}}>WIP</span> }<br/>
-                <textarea  style={{ width: '60%', margin: 10 }} value={this.state.edit} onChange={(e) => this.handleChange(e)} /><br/>
-                <img src={this.state.chat} alt="cat" width="250" />
-                <div className="erase" onClick={() => {this.props.deleteTodo(this.state.popup.id); this.setState({popup: null})}}>Effacer</div>
-                <div className="close" onClick={() => {this.setState({popup: null})}}>Save and close</div>
-            </div>;
-        }
-
-
         return <div>
-            {popup}
+            {this.state.popup ? <Popup todo={this.state.popup} toggleTodo={this.TogPopup} deleteTodo={this.props.deleteTodo} editTodo={this.props.editTodo}/> : null}
             <ul className="todoContain">
                 {this.props.todos.map(todo =>
                     <Todo
@@ -93,7 +73,8 @@ TodoList.propTypes = {
     text: PropTypes.string.isRequired
   }).isRequired).isRequired,
   toggleTodo: PropTypes.func.isRequired,
-  deleteTodo: PropTypes.func.isRequired
+    deleteTodo: PropTypes.func.isRequired,
+    editTodo: PropTypes.func.isRequired
 }
 
 export default TodoList
